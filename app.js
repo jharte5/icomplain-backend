@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users/users');
 const blogsRouter = require('./routes/blogs/blogs');
 
-require('dotenv').config
+require('dotenv').config()
 
 mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
@@ -19,7 +19,6 @@ mongoose.connect(process.env.MONGO_DB, {
 })
 .then(() => console.log('DB connection success!'))
 .catch((e) => console.log(e))
-
 
 const app = express();
 
