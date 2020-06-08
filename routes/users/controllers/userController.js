@@ -11,6 +11,7 @@ module.exports ={
                 password: req.body.password,
                 username: req.body.username,
             });
+            console.log(newUser)
             let genSalt = await bcrypt.genSalt(12);
             let hashedPassword = await bcrypt.hash(newUser.password, genSalt);
             newUser.password = hashedPassword;
