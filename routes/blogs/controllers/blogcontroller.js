@@ -18,8 +18,16 @@ module.exports = {
             res.status(500).json(dbErrorHelper(e))
         }
     },
-    // getAllBlogs: async (re) => {
-        
-    // }
+    getAllBlogs: async (re) => {
+        try{
+            let userID = req.auth._id;
+            let foundAllBlogs = await User.findById({ _id: userID})
+            .populate('blogs')
+            .select('-__v -password -userCreated');
+            res.json(foundAllBlogs);
+        } catch (e) {
+            res.status(500).json(dbErrorHelper(e))
+        }
+    }
     
 }

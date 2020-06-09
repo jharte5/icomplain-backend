@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
         type:String,
         default: now.format('dddd, MMMM Do YYYY, hh:mm a')
     },
+    blogs: [{type: mongoose.Schema.ObjectId, ref:'Blog' }],
 });
 
 module.exports = mongoose.model('User', UserSchema)
