@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../model/User');
 const dbErrorHelper = require('../AuthHelp/dbErrorHelper');
 const jwtHelper = require('../AuthHelp/jwtHelp')
+const faker = require('faker')
 
 module.exports ={
     createUser: async (req,res) => {
@@ -9,7 +10,9 @@ module.exports ={
             let newUser = await new User({
                 email: req.body.email,
                 password: req.body.password,
-                username: req.body.username,
+                username: req.body.username = req.body.profile.name,
+                profile: req.body.profile.picture = faker.image.avatar(),
+                
             });
             console.log(newUser)
             let genSalt = await bcrypt.genSalt(12);
@@ -28,7 +31,7 @@ module.exports ={
     },
     login: async (req,res) => {
         try{
-            let foundUser = await (await User.findOne({ email: req.body.email})).select('-__v -userCreated')
+            let foundUser = await User.findOne({ email: req.body.email}).select('-__v -userCreated')
             if (foundUser === null) {
                 throw Error('user not found, plz sign up')
             }
@@ -55,13 +58,30 @@ module.exports ={
         res.clearCookie('jwt-cookie-refresh-blog');
         res.end
     },
+    updateProfile: (params, id) => {
+        const { username, email} = params;
+        return new Promise((resolve, reject) => {
+            User.findById(id)
+            .then(user => {
+                if(username) user.profile.name = username;
+                if(email) user.email = email;
+                return user;
+            })
+            .then(user => {
+                user.save().then(user => {
+                    resolve(user)
+                })
+            })
+            .catch(err => reject(err));
+        }).catch(err => reject(err))
+    },
     createNewJWTAndRefreshToken: async (req, res) => {
         try {   
             let jwtTokenObj = await jwtHelper.createJwtToken(req.profile)
 
             console.log(jwtTokenObj)
             res.cookie('jwt-cookie-blog' , jwtTokenObj.jwtToken, {
-                expires: new Date(Date.now() + 36000),
+                expires: new Date(Date.now() + 360000),
                 httpOnly: false,
                 secure: process.env.NODE_ENV === production ? true: false,
             })

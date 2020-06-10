@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: 'password is required'
     },
+    profile: {
+        name: {type: String, default:''},
+        picture: {type:String, default:''}
+    },
     userCreated: {
         type:String,
         default: now.format('dddd, MMMM Do YYYY, hh:mm a')
