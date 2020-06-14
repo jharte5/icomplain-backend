@@ -45,7 +45,7 @@ module.exports ={
             let jwtTokenObj = await jwtHelper.createJwtToken(foundUser)
             foundUser = foundUser.toObject()
             delete foundUser.password
-            res.json({ user : foundUser})
+            res.json({ user : foundUser, token: jwtTokenObj})
         }catch (e){
             console.log(e)
             res.status(500).json({
