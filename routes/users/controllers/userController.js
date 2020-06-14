@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const User = require('../model/User');
 const dbErrorHelper = require('../AuthHelp/dbErrorHelper');
-const jwtHelper = require('../AuthHelp/jwtHelp')
-const faker = require('faker')
+const jwtHelper = require('../AuthHelp/jwtHelp');
+const faker = require('faker');
 
 module.exports ={
     createUser: async (req,res) => {
@@ -79,26 +79,25 @@ module.exports ={
         try {   
             let jwtTokenObj = await jwtHelper.createJwtToken(req.profile)
 
-            console.log(jwtTokenObj)
-            res.cookie('jwt-cookie-blog' , jwtTokenObj.jwtToken, {
-                expires: new Date(Date.now() + 360000),
-                httpOnly: false,
-                secure: process.env.NODE_ENV === production ? true: false,
-            })
-            res.cookie('jwt-cookie-blog' , jwtTokenObj.jwtRefreshToken, {
-                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-                httpOnly: false,
-                secure: process.env.NODE_ENV === production ? true: false,
-            })
-            res.status(200).json({
-                status: 200,
-                message: "Successfully renewed token and refresh token",
-            });
-        } catch (e) {
-            res.status(500).json({
-                message:dbErrorHelper(e)
-            })
-        }
+      console.log(jwtTokenObj);
+      res.cookie('jwt-cookie-blog', jwtTokenObj.jwtToken, {
+        expires: new Date(Date.now() + 360000),
+        httpOnly: false,
+        secure: process.env.NODE_ENV === production ? true : false,
+      });
+      res.cookie('jwt-cookie-blog', jwtTokenObj.jwtRefreshToken, {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        httpOnly: false,
+        secure: process.env.NODE_ENV === production ? true : false,
+      });
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully renewed token and refresh token',
+      });
+    } catch (e) {
+      res.status(500).json({
+        message: dbErrorHelper(e),
+      });
     }
-    
-}
+  },
+};
