@@ -11,7 +11,7 @@ module.exports ={
                 email: req.body.email,
                 password: req.body.password,
                 username: req.body.username,
-                // profile: req.body.profile.picture = faker.image.avatar(),
+                profile: faker.image.avatar(),
                 
             });
             console.log(newUser)
