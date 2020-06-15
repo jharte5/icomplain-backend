@@ -20,4 +20,7 @@ router.get('/blogs', (req,res) => {
     })
 })
 
+router.get("/all-blogs", blogController.getBlogs);
+
+
 module.exports = router;

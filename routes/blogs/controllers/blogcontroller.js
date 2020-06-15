@@ -28,6 +28,12 @@ module.exports = {
         } catch (e) {
             res.status(500).json(dbErrorHelper(e))
         }
+    },
+    getBlogs: (req, res) => {
+        Blog.find((err, data) => {
+            if(err) throw err;
+            res.json(data)
+        })
     }
     
 }

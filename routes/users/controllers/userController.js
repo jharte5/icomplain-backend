@@ -10,8 +10,8 @@ module.exports ={
             let newUser = await new User({
                 email: req.body.email,
                 password: req.body.password,
-                username: req.body.username = req.body.profile.name,
-                profile: req.body.profile.picture = faker.image.avatar(),
+                username: req.body.username,
+                // profile: req.body.profile.picture = faker.image.avatar(),
                 
             });
             console.log(newUser)

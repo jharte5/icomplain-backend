@@ -22,7 +22,7 @@ function createJwtToken(user) {
     
     let jwtToken = jwt.sign( payload = {email:user.email, _id: user._id, username: user.username},
         process.env.JWT_USER_SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: "7d",
     })
     let jwtRefreshToken = jwt.sign({_id: user._id}, process.env.JWT_USER_REFRESH_SECRET_KEY, {expiresIn: '7d'})
     return {
